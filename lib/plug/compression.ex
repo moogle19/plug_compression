@@ -1,4 +1,16 @@
 defmodule Plug.Compression do
+  @moduledoc """
+  A plug for providing server-side compression.
+
+  To use it, just plug it into the desired module:
+
+    plug Plug.Compression, only: ["gzip"]
+
+  ## Options:
+
+    * `:only` - The compression algorithm which can be used. Defaults to ["gzip", "deflate"].
+      The used algorithm is chosen by the given preference of the client request.
+  """
   import Plug.Conn
 
   @supported ["gzip", "deflate"]
