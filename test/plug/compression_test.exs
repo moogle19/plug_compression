@@ -7,25 +7,25 @@ defmodule Plug.CompressionTest do
   @opts Plug.Compression.init([])
 
   test "valid compression algortihm" do
-    assert Plug.Compression.init(only: :gzip) == [:gzip]
-    assert Plug.Compression.init(only: :deflate) == [:deflate]
-    assert Plug.Compression.init(only: [:gzip]) == [:gzip]
-    assert Plug.Compression.init(only: [:gzip, :deflate]) == [:gzip, :deflate]
+    assert Plug.Compression.init(only: "gzip") == ["gzip"]
+    assert Plug.Compression.init(only: "deflate") == ["deflate"]
+    assert Plug.Compression.init(only: ["gzip"]) == ["gzip"]
+    assert Plug.Compression.init(only: ["gzip", "deflate"]) == ["gzip", "deflate"]
   end
 
   test "unsupported compression algorithm" do
-    assert_raise ArgumentError, "invalid compression: [:brotli]", fn ->
-      Plug.Compression.init(only: [:brotli])
+    assert_raise ArgumentError, ~s(invalid compression: ["brotli"]), fn ->
+      Plug.Compression.init(only: ["brotli"])
     end
 
-    assert_raise ArgumentError, "invalid compression: :brotli", fn ->
-      Plug.Compression.init(only: :brotli)
+    assert_raise ArgumentError, ~s(invalid compression: "brotli"), fn ->
+      Plug.Compression.init(only: "brotli")
     end
   end
 
   test "invalid opts" do
-    assert_raise ArgumentError, "invalid opts: [compression: :gzip]", fn ->
-      Plug.Compression.init(compression: :gzip)
+    assert_raise ArgumentError, ~s(invalid opts: [compression: "gzip"]), fn ->
+      Plug.Compression.init(compression: "gzip")
     end
   end
 
